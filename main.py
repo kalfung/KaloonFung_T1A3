@@ -1,5 +1,9 @@
 import random
 import sys
+import objects
+
+
+
 while True:
     decision = input('COntinue to the next area? (y/n): ').lower()
     if decision == 'n':
