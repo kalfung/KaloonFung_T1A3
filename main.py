@@ -27,7 +27,7 @@ class Coffer:
     def loot(self, character):
         character.gold.add_treasure(self.gold)
         self.gold.set(0)
-        print(f'You now have {player.gold} gold')
+        print(f'You now have {player.gold} pieces of gold.')
 
 # object for combat characters (player and enemy monsters)
 class Character:
@@ -53,11 +53,16 @@ def spawn_coffer():
         elif decision == 'loot':
             print(f'The coffer contains {coffer.gold} pieces of gold inside.')
             coffer.loot(player)
+            coffers_looted += 1
             break
         else:
             print('Can\'t do that. Try again!')
 
 player = Character('Adventurer', 100, 40, 40)
+enemies_encountered = 0
+coffers_encountered = 0
+coffers_looted = 0
+enemies_defeated = 0
 
 while True:
     decision = input('Continue to the next area? (y/n): ').lower()
@@ -68,10 +73,13 @@ while True:
         encounter = random.randint(1,10)
         if encounter >= 9:
             print(f'{encounter} You discover a treasure coffer!')
+            coffers_encountered += 1
             spawn_coffer()
         elif encounter >= 3:
             print(f'{encounter} You run into a monster!')
+            enemies_encountered += 1
         else:
             print(f'{encounter} You encounter a treasure trap!')
+            enemies_encountered += 1
     else:
         print('Can\'t do that. Try again!')
