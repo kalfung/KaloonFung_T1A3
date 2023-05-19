@@ -31,24 +31,29 @@ class Coffer:
 
 # object for combat characters (player and enemy monsters)
 class Character:
-    def __init__(self, name, maxhealth, attack, cure):
+    def __init__(self, name, max_health, strength, cure):
         self.name = name
-        self.maxhealth = maxhealth
-        self.health = maxhealth
-        self.attack = attack
+        self.max_health = max_health
+        self.health = max_health
+        self.strength = strength
         self.cure = cure
         self.gold = Treasure(0)
 
     def attack(self, enemy):
-        damage = self.attack
+        damage_variance = random.randint(-5, 5)
+        damage = self.strength + damage_variance
         print(f'You swing your sword at the {enemy.name}!')
-        print(f'You deal {damage} damag!')
+        print(f'You deal {damage} damage!')
         enemy.health -= damage
+        enemy.health = max(0, enemy.health)
         print(f'The {enemy.name} now has {enemy.health} health.')
 
     def heal(self):
-        self.health += self.cure
-        print(f'You cast a healing spell and recover {self.cure} health!')
+        heal_variance = random.randint(-5, 5)
+        heal_amount = self.cure + heal_variance
+        self.health += heal_amount
+        self.health = min(self.health, self.max_health)  # caps health at max
+        print(f'You cast a healing spell and recover {heal_amount} health!')
         print(f'You now have {player.health} health.')
 
 def spawn_coffer():
