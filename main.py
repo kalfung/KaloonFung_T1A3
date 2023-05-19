@@ -36,6 +36,9 @@ class Character:
 def spawn_coffer():
     coffer = Coffer(random.randint(10, 30))
     print(f'The coffer contains {coffer.gold} gold inside.')
+    with open('coffer.txt') as f:
+        contents = f.read()
+        print(contents)
     print(f'Do you want to [loot] the coffer, or [ignore] it and continue?')
     while True:
         decision = input().lower()
