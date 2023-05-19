@@ -46,7 +46,7 @@ A link to my [Implementatiopn Plan on Trello](https://trello.com/b/38r4jreP/t1a3
 
 Throughout the development of the game, I made use of Trello to track and prioritise features and components of the application, especially those with dependencies. 
 
-Because, 
+
 
 ## (R8) Help Documentation
 
