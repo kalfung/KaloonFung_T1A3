@@ -11,6 +11,9 @@ class Gold:
     def add(self, gold):
         self.gold += gold
 
+    def add_gold(self, gold):
+        self.add(gold)
+
 class Coffer:
     def __init__(self, gold):
         self.gold = gold
@@ -30,6 +33,21 @@ class Character:
         self.cure = cure
         self.gold = gold
 
+def spawn_coffer():
+    coffer = Coffer(random.randint(10, 30))
+    print(f'The coffer contains {coffer.gold} gold inside.')
+    print(f'Do you want to [loot] the coffer, or [ignore] it and continue?')
+    while True:
+        decision = input().lower()
+        if decision == 'ignore':
+            break
+        elif decision == 'loot':
+            print(f'The coffer contains {coffer.gold} pieces of gold inside.')
+            coffer.loot(player)
+            break
+        else:
+            print('Can\'t do that. Try again!')
+
 while True:
     decision = input('COntinue to the next area? (y/n): ').lower()
     if decision == 'n':
@@ -39,6 +57,7 @@ while True:
         encounter = random.randint(1,10)
         if encounter >= 9:
             print(f'{encounter} You discover a treasure coffer!')
+            spawn_coffer()
         elif encounter >= 3:
             print(f'{encounter} You run into a monster!')
         else:
