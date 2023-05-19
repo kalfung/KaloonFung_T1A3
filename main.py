@@ -1,7 +1,7 @@
 import random
 import sys
 
-class Gold:
+class Treasure:
     def __init__(self, gold):
         self.gold = gold
 
@@ -11,27 +11,27 @@ class Gold:
     def add(self, gold):
         self.gold += gold
 
-    def add_gold(self, gold):
-        self.add(gold)
+    def add_treasure(self, treasure):
+        self.add(treasure.gold)
 
 class Coffer:
     def __init__(self, gold):
-        self.gold = gold
+        self.gold = Treasure(gold)
 
     def loot(self, character):
-        character.gold.add(self.gold)
+        character.gold.add_treasure(self.gold)
         self.gold.set(0)
         print(f'You now have {player.gold} gold')
 
 # object for combat characters (player and enemy monsters)
 class Character:
-    def __init__(self, name, maxhealth, attack, cure, gold):
+    def __init__(self, name, maxhealth, attack, cure):
         self.name = name
         self.maxhealth = maxhealth
         self.health = maxhealth
         self.attack = attack
         self.cure = cure
-        self.gold = gold
+        self.gold = Treasure(0)
 
 def spawn_coffer():
     coffer = Coffer(random.randint(10, 30))
@@ -48,8 +48,10 @@ def spawn_coffer():
         else:
             print('Can\'t do that. Try again!')
 
+player = Character('Adventurer', 100, 40, 40)
+
 while True:
-    decision = input('COntinue to the next area? (y/n): ').lower()
+    decision = input('Continue to the next area? (y/n): ').lower()
     if decision == 'n':
         print('Until next time!')
         sys.exit()
