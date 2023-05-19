@@ -39,6 +39,18 @@ class Character:
         self.cure = cure
         self.gold = Treasure(0)
 
+    def attack(self, enemy):
+        damage = self.attack
+        print(f'You swing your sword at the {enemy.name}!')
+        print(f'You deal {damage} damag!')
+        enemy.health -= damage
+        print(f'The {enemy.name} now has {enemy.health} health.')
+
+    def heal(self):
+        self.health += self.cure
+        print(f'You cast a healing spell and recover {self.cure} health!')
+        print(f'You now have {player.health} health.')
+
 def spawn_coffer():
     coffer = Coffer(random.randint(10, 30))
     with open('coffer.txt') as f:
@@ -58,6 +70,8 @@ def spawn_coffer():
             break
         else:
             print('Can\'t do that. Try again!')
+
+
 
 player = Character('Adventurer', 100, 40, 40)
 enemies_encountered = 0
