@@ -1,6 +1,7 @@
 import random
 import sys
 
+# object for gold
 class Treasure:
     def __init__(self, gold):
         self.gold = gold
@@ -14,12 +15,14 @@ class Treasure:
     def add_treasure(self, treasure):
         self.add(treasure.gold)
 
+# may not need this repr
     def __repr__(self):
         return f'Treasure(gold={self.gold})'
 
     def __str__(self):
         return f'{self.gold}'
 
+# object for treasure coffers
 class Coffer:
     def __init__(self, gold):
         self.gold = Treasure(gold)
@@ -28,6 +31,7 @@ class Coffer:
         character.gold.add_treasure(self.gold)
         self.gold.set(0)
         print(f'You now have {player.gold} pieces of gold.')
+
 
 # object for combat characters (player and enemy monsters)
 class Character:
@@ -64,6 +68,8 @@ class Character:
         print(f'You cast a healing spell and recover {heal_amount} health!')
         print(f'You now have {player.health} health.')
 
+
+# treasure coffer spawn function
 def spawn_coffer():
     coffer = Coffer(random.randint(10, 30))
     with open('coffer.txt') as f:
@@ -84,6 +90,8 @@ def spawn_coffer():
         else:
             print('Can\'t do that. Try again!')
 
+
+# treasure coffer trap/mimic spawn function
 def spawn_mimic():
     enemy = Character('mimic', 100, 30, None)
     with open('coffer.txt') as f:
@@ -93,10 +101,13 @@ def spawn_mimic():
     while True:
         decision = input().lower()
         if decision == 'ignore':
+            print('Good choice. That was actually a mimic in disguise!')
+            print('You get away safely!')
             break
         elif decision == 'loot':
             print(f'The {enemy.name} reveals itself, shedding its glittering disguise and attacks!')
             player.take_damage(enemy)
+            # everything after this line in the function is the battle function
             print('What do you do?')
             global enemies_defeated
             players_turn = True
@@ -120,9 +131,7 @@ def spawn_mimic():
 
             if player.health <= 0:
                 print(f'You have been defeated by the {enemy.name}.')
-                print(f'You encountered {enemies_encountered} enemies and encountered {coffers_encountered} coffers.')
-                print(f'You defeated {enemies_defeated} enemies and looted {coffers_looted} coffers.')
-                quit()
+                game_recap()
             else:
                 print(f'You have successfully defeated the {enemy.name}!')
                 enemies_defeated += 1
@@ -131,6 +140,7 @@ def spawn_mimic():
             print('Can\'t do that. Try again!')
 
 
+# monster spawn function
 def spawn_monster():
     enemy = Character('monster', 100, 30, None)
     print(f'You have {player.health} health.')
@@ -158,38 +168,56 @@ def spawn_monster():
 
     if player.health <= 0:
         print(f'You have been defeated by the {enemy.name}.')
-        print(f'You encountered {enemies_encountered} enemies and encountered {coffers_encountered} coffers.')
-        print(f'You defeated {enemies_defeated} enemies and looted {coffers_looted} coffers.')
-        quit()
+        game_recap()
     else:
         print(f'You have successfully defeated the {enemy.name}!')
         enemies_defeated += 1
 
+# function to display tally of enemy and coffer encounters
+def game_recap():
+    print(f'You encountered {enemies_encountered} enemies and {coffers_encountered} coffers.')
+    print(f'You defeated {enemies_defeated} enemies and looted {coffers_looted} coffers.')
+    sys.exit()
 
-
-player = Character('Adventurer', 100, 40, 40)
+# declaring global variables
+player = Character('Adventurer', 100, 40, 50)
 enemies_encountered = 0
+enemies_defeated = 0
 coffers_encountered = 0
 coffers_looted = 0
-enemies_defeated = 0
 
+
+
+# main game code
+print('You arrive at the entrance of the caverns.')
+print('Armed with your sword and handful of spells, you venture into the dark depths before you.')
 while True:
     decision = input('Continue to the next area? (y/n): ').lower()
     if decision == 'n':
         print('Until next time!')
-        sys.exit()
+        # print(f'You encountered {enemies_encountered} enemies and {coffers_encountered} coffers.')
+        # print(f'You defeated {enemies_defeated} enemies and looted {coffers_looted} coffers.')
+        # sys.exit()
+        game_recap()
     elif decision == 'y':
         encounter = random.randint(1,10)
         if encounter >= 9:
-            print(f'{encounter} You discover a treasure coffer!')
+            print('You discover a glittering treasure coffer!')
             coffers_encountered += 1
             spawn_coffer()
         elif encounter >= 3:
-        #     print(f'{encounter} You run into a monster!')
-        #     enemies_encountered += 1
-        #     spawn_monster()
-        # else:
-            print(f'{encounter} You discover a suspicious looking treasure coffer.')
+            print('You run into a monster!')
+            enemies_encountered += 1
+            spawn_monster()
+            coffer_drop = random.randint(1, 10)
+            if coffer_drop >= 9:
+                print('Huzzah! Upon its defeat, the monster drops a bonus treasure coffer!')
+                coffers_encountered += 1
+                spawn_coffer ()
+            else:
+                pass
+        else:
+            print('You discover a suspicious looking treasure coffer.')
             enemies_encountered += 1
             spawn_mimic()
     else:
