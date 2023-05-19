@@ -1,5 +1,6 @@
 import random
 import sys
+import art
 
 # object for gold
 class Treasure:
@@ -143,6 +144,9 @@ def spawn_mimic():
 # monster spawn function
 def spawn_monster():
     enemy = Character('monster', 100, 30, None)
+    with open('monster.txt') as f:
+        contents = f.read()
+        print(contents)
     print(f'You have {player.health} health.')
     # everything after this line in the function is the battle function
     print('What do you do?')
@@ -190,7 +194,8 @@ coffers_looted = 0
 
 # main game code
 print('You arrive at the entrance of the caverns.')
-print('Armed with your sword and handful of spells, you venture into the dark depths before you.')
+print('Armed with your trusty sword and handful of spells, you venture into the dark depths before you.')
+art.aprint('sword6')
 while True:
     decision = input('Continue to the next area? (y/n): ').lower()
     if decision == 'n':
