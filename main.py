@@ -84,6 +84,51 @@ def spawn_coffer():
         else:
             print('Can\'t do that. Try again!')
 
+def spawn_mimic():
+    enemy = Character('mimic', 100, 30, None)
+    with open('coffer.txt') as f:
+        contents = f.read()
+        print(contents)
+    print(f'Do you want to [loot] the coffer, or [ignore] it and continue?')
+    while True:
+        decision = input().lower()
+        if decision == 'ignore':
+            break
+        elif decision == 'loot':
+            print(f'The {enemy.name} reveals itself, shedding its glittering disguise and attacks!')
+            player.take_damage(enemy)
+            print('What do you do?')
+        else:
+            print('Can\'t do that. Try again!')
+    global enemies_defeated
+    players_turn = True
+
+    while player.health > 0 and enemy.health > 0:
+        if players_turn:
+            print(f'Do you [attack] the {enemy.name} or cast a [heal] spell?')
+            decision = input().lower()
+            if decision == 'heal':
+                player.heal()
+            elif decision == 'attack':
+                player.attack(enemy)
+            else:
+                print('Can\'t do that. Try again!')
+                continue
+        else:
+            print(f'It\'s the {enemy.name}\'s turn.')
+            player.take_damage(enemy)
+
+        players_turn = not players_turn
+
+    if player.health <= 0:
+        print(f'You have been defeated by the {enemy.name}.')
+        print(f'You encountered {enemies_encountered} enemies and encountered {coffers_encountered} coffers.')
+        print(f'You defeated {enemies_defeated} enemies and looted {coffers_looted} coffers.')
+        quit()
+    else:
+        print(f'You have successfully defeated the {enemy.name}!')
+        enemies_defeated += 1
+
 def spawn_monster():
     enemy = Character('monster', 100, 30, None)
     print(f'You have {player.health} health.')
@@ -138,11 +183,12 @@ while True:
             coffers_encountered += 1
             spawn_coffer()
         elif encounter >= 3:
-            print(f'{encounter} You run into a monster!')
+        #     print(f'{encounter} You run into a monster!')
+        #     enemies_encountered += 1
+        #     spawn_monster()
+        # else:
+            print(f'{encounter} You discover a suspicious looking treasure coffer.')
             enemies_encountered += 1
-            spawn_monster()
-        else:
-            print(f'{encounter} You encounter a treasure trap!')
-            enemies_encountered += 1
+            spawn_mimic()
     else:
         print('Can\'t do that. Try again!')
