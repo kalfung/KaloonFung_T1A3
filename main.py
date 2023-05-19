@@ -41,7 +41,6 @@ class Character:
 
 def spawn_coffer():
     coffer = Coffer(random.randint(10, 30))
-    print(f'The coffer contains {coffer.gold} gold inside.')
     with open('coffer.txt') as f:
         contents = f.read()
         print(contents)
@@ -49,10 +48,12 @@ def spawn_coffer():
     while True:
         decision = input().lower()
         if decision == 'ignore':
+            print('You ignore the coffer and continue on your way.')
             break
         elif decision == 'loot':
             print(f'The coffer contains {coffer.gold} pieces of gold inside.')
             coffer.loot(player)
+            global coffers_looted
             coffers_looted += 1
             break
         else:
