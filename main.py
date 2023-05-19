@@ -86,7 +86,10 @@ def spawn_coffer():
 
 def spawn_monster():
     enemy = Character('monster', 100, 30, None)
+    print(f'You have {player.health} health.')
+    # everything after this line in the function is the battle function
     print('What do you do?')
+    global enemies_defeated
     players_turn = True
 
     while player.health > 0 and enemy.health > 0:
@@ -108,9 +111,12 @@ def spawn_monster():
 
     if player.health <= 0:
         print(f'You have been defeated by the {enemy.name}.')
+        print(f'You encountered {enemies_encountered} enemies and encountered {coffers_encountered} coffers.')
+        print(f'You defeated {enemies_defeated} enemies and looted {coffers_looted} coffers.')
         quit()
     else:
         print(f'You have successfully defeated the {enemy.name}!')
+        enemies_defeated += 1
 
 
 
