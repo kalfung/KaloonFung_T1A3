@@ -15,6 +15,11 @@ class Coffer:
     def __init__(self, gold):
         self.gold = gold
 
+    def loot(self, character):
+        character.gold.add(self.gold)
+        self.gold.set(0)
+        print(f'You now have {player.gold} gold')
+
 # object for combat characters (player and enemy monsters)
 class Character:
     def __init__(self, name, maxhealth, attack, cure, gold):
