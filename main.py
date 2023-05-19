@@ -79,16 +79,32 @@ def spawn_coffer():
 def spawn_monster():
     enemy = Character('monster', 100, 30, None)
     print('What do you do?')
+    players_turn = True
+
     while player.health > 0 and enemy.health > 0:
-        print(f'Do you [attack] the {enemy.name} or cast a [heal] spell?')
-        decision = input().lower()
-        if decision == 'heal':
-            player.heal()
-        elif decision == 'attack':
-            player.attack(enemy)
+        if players_turn:
+            print(f'Do you [attack] the {enemy.name} or cast a [heal] spell?')
+            decision = input().lower()
+            if decision == 'heal':
+                player.heal()
+            elif decision == 'attack':
+                player.attack(enemy)
+            else:
+                print('Can\'t do that. Try again!')
+                continue
         else:
-            print('Can\'t do that. Try again!')
-            continue
+            print(f'It\'s the {enemy.name}\'s turn.')
+            enemy.attack(player)
+
+        players_turn = not players_turn
+
+    if player.health <= 0:
+        print(f'You have been defeated by the {enemy.name}.')
+        quit()
+    else:
+        print(f'You have successfully defeated the {enemy.name}!')
+
+
 
 player = Character('Adventurer', 100, 40, 40)
 enemies_encountered = 0
