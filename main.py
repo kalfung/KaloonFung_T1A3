@@ -14,6 +14,12 @@ class Treasure:
     def add_treasure(self, treasure):
         self.add(treasure.gold)
 
+    def __repr__(self):
+        return f'Treasure(gold={self.gold})'
+
+    def __str__(self):
+        return f'{self.gold}'
+
 class Coffer:
     def __init__(self, gold):
         self.gold = Treasure(gold)
