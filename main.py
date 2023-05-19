@@ -77,7 +77,7 @@ def spawn_coffer():
     with open('coffer.txt') as f:
         contents = f.read()
         print(contents)
-    print('Do you want to ' + Fore.YELLOW + '[loot]' + Style.RESET_ALL + ' the coffer, or ' + Fore.RED + '[ignore]' + Style.RESET_ALL + ' it and continue?')
+    print('Do you want to ' + Fore.YELLOW + 'loot' + Style.RESET_ALL + ' the coffer, or ' + Fore.RED + 'ignore' + Style.RESET_ALL + ' it and continue?')
     while True:
         decision = input().lower()
         if decision == 'ignore':
@@ -99,7 +99,7 @@ def spawn_mimic():
     with open('coffer.txt') as f:
         contents = f.read()
         print(contents)
-    print('Do you want to ' + Fore.YELLOW + '[loot]' + Style.RESET_ALL + ' the coffer, or ' + Fore.RED + '[ignore]' + Style.RESET_ALL + ' it and continue?')
+    print('Do you want to ' + Fore.YELLOW + 'loot' + Style.RESET_ALL + ' the coffer, or ' + Fore.RED + 'ignore' + Style.RESET_ALL + ' it and continue?')
     while True:
         decision = input().lower()
         if decision == 'ignore':
@@ -116,7 +116,7 @@ def spawn_mimic():
 
             while player.health > 0 and enemy.health > 0:
                 if players_turn:
-                    print('Do you ' + Fore.RED + '[attack]' + Style.RESET_ALL + f' the {enemy.name} or cast a ' + Fore.GREEN + '[heal]' + Style.RESET_ALL + ' spell?')
+                    print('Do you ' + Fore.RED + 'attack' + Style.RESET_ALL + f' the {enemy.name} or cast a ' + Fore.GREEN + 'heal' + Style.RESET_ALL + ' spell?')
                     decision = input().lower()
                     if decision == 'heal':
                         player.heal()
@@ -135,7 +135,7 @@ def spawn_mimic():
                 print(Fore.RED + f'You have been defeated by the {enemy.name}.')
                 game_recap()
             else:
-                print(f'You have successfully defeated the {enemy.name}!')
+                print(Fore.YELLOW + f'You have successfully defeated the {enemy.name}!' + Style.RESET_ALL)
                 enemies_defeated += 1
             break
         else:
@@ -156,7 +156,7 @@ def spawn_monster():
 
     while player.health > 0 and enemy.health > 0:
         if players_turn:
-            print('Do you ' + Fore.RED + '[attack]' + Style.RESET_ALL + f' the {enemy.name} or cast a ' + Fore.GREEN + '[heal]' + Style.RESET_ALL + ' spell?')
+            print('Do you ' + Fore.RED + 'attack' + Style.RESET_ALL + f' the {enemy.name} or cast a ' + Fore.GREEN + 'heal' + Style.RESET_ALL + ' spell?')
             decision = input().lower()
             if decision == 'heal':
                 player.heal()
@@ -180,8 +180,10 @@ def spawn_monster():
 
 # function to display tally of enemy and coffer encounters
 def game_recap():
-    print(Fore.CYAN + f'You encountered {enemies_encountered} enemies and {coffers_encountered} coffers.')
-    print(f'You defeated {enemies_defeated} enemies and looted {coffers_looted} coffers.' + Style.RESET_ALL)
+    print(Fore.CYAN)
+    print(f'You encountered {enemies_encountered} enemies and {coffers_encountered} coffers.')
+    print(f'You defeated {enemies_defeated} enemies and looted {coffers_looted} coffers.')
+    print(Style.RESET_ALL)
     sys.exit()
 
 # declaring global variables
@@ -200,9 +202,6 @@ while True:
     decision = input('Continue to the next area? [y/n]: ').lower()
     if decision == 'n':
         print('Until next time!')
-        # print(f'You encountered {enemies_encountered} enemies and {coffers_encountered} coffers.')
-        # print(f'You defeated {enemies_defeated} enemies and looted {coffers_looted} coffers.')
-        # sys.exit()
         game_recap()
     elif decision == 'y':
         encounter = random.randint(1,10)
