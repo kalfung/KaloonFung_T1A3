@@ -1,7 +1,9 @@
 class Player:
-    def init(self, name, health, attack, cure, gold):
+    def __init__(self, name, maxhealth, attack, cure, gold):
         self.name = name
-        self.health = health
-        self.attach = attack
+        self.maxhealth = maxhealth
+        self.health = maxhealth
+        self.attack = attack
         self.cure = cure
         self.gold = gold
+        self.alive = True

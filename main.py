@@ -2,7 +2,15 @@ import random
 import sys
 import objects
 
-
+# object for combat characters (player and enemy monsters)
+class Character:
+    def __init__(self, name, maxhealth, attack, cure, gold):
+        self.name = name
+        self.maxhealth = maxhealth
+        self.health = maxhealth
+        self.attack = attack
+        self.cure = cure
+        self.gold = gold
 
 while True:
     decision = input('COntinue to the next area? (y/n): ').lower()
