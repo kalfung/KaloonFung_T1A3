@@ -56,7 +56,7 @@ The game makes use of just two Python packages in order to operate properly. A l
 - art==5.9
 - colorama==0.4.6
 
-These should be automatically installed when running of the provided bask scripts mentioned above. However, if you'd like to install them manually via your terminal, you may do so by navigating to the game's 'src' directory, create and activate a virtual environment, and enter the following to install the required packages:
+These should be automatically installed when running of the provided bash script mentioned above. However, if you'd like to install them manually via your terminal, you may do so by navigating to the game's 'src' directory, create and activate a virtual environment, and enter the following to install the required packages:
 
 ```pip3 install -r requirements.txt```
 
