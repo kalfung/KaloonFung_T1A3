@@ -48,6 +48,14 @@ class Character:
         enemy.health = max(0, enemy.health)
         print(f'The {enemy.name} now has {enemy.health} health.')
 
+    def take_damage(self, enemy):
+        damage_variance = random.randint(-5, 5)
+        damage = enemy.strength + damage_variance
+        self.health -= damage
+        self.health = max(0, self.health)  # makes sure health >= 0
+        print(f'The {enemy.name} attacks you and deals {damage} damage.')
+        print(f'You now have {player.health} health.')
+
     def heal(self):
         heal_variance = random.randint(-5, 5)
         heal_amount = self.cure + heal_variance
@@ -94,7 +102,7 @@ def spawn_monster():
                 continue
         else:
             print(f'It\'s the {enemy.name}\'s turn.')
-            enemy.attack(player)
+            player.take_damage(enemy)
 
         players_turn = not players_turn
 
