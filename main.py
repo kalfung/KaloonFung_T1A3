@@ -1,6 +1,16 @@
 import random
 import sys
 
+class Gold:
+    def __init__(self, gold):
+        self.gold = gold
+
+    def set(self, gold):
+        self.gold = gold
+
+    def add(self, gold):
+        self.gold += gold
+
 class Coffer:
     def __init__(self, gold):
         self.gold = gold
