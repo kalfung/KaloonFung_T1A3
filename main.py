@@ -1,6 +1,9 @@
 import random
 import sys
-import objects
+
+class Coffer:
+    def __init__(self, gold):
+        self.gold = gold
 
 # object for combat characters (player and enemy monsters)
 class Character:
