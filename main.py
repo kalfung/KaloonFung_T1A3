@@ -1,6 +1,7 @@
 import random
 import sys
 import art
+from colorama import Fore, Style
 
 # object for gold
 class Treasure:
@@ -17,8 +18,8 @@ class Treasure:
         self.add(treasure.gold)
 
 # may not need this repr
-    def __repr__(self):
-        return f'Treasure(gold={self.gold})'
+    # def __repr__(self):
+    #     return f'Treasure(gold={self.gold})'
 
     def __str__(self):
         return f'{self.gold}'
@@ -31,7 +32,7 @@ class Coffer:
     def loot(self, character):
         character.gold.add_treasure(self.gold)
         self.gold.set(0)
-        print(f'You now have {player.gold} pieces of gold.')
+        print(f'You now have {player.gold} pieces of gold.' + Style.RESET_ALL)
 
 
 # object for combat characters (player and enemy monsters)
@@ -47,8 +48,8 @@ class Character:
     def attack(self, enemy):
         damage_variance = random.randint(-5, 5)
         damage = self.strength + damage_variance
-        print(f'You swing your sword at the {enemy.name}!')
-        print(f'You deal {damage} damage!')
+        print(Fore.MAGENTA + f'You swing your sword at the {enemy.name}!')
+        print(f'You deal {damage} damage!' + Style.RESET_ALL)
         enemy.health -= damage
         enemy.health = max(0, enemy.health)
         print(f'The {enemy.name} now has {enemy.health} health.')
@@ -58,16 +59,16 @@ class Character:
         damage = enemy.strength + damage_variance
         self.health -= damage
         self.health = max(0, self.health)  # makes sure health >= 0
-        print(f'The {enemy.name} attacks you and deals {damage} damage.')
-        print(f'You now have {player.health} health.')
+        print(Fore.RED + f'The {enemy.name} attacks you and deals {damage} damage.')
+        print(f'You now have {player.health} health.' + Style.RESET_ALL)
 
     def heal(self):
         heal_variance = random.randint(-5, 5)
         heal_amount = self.cure + heal_variance
         self.health += heal_amount
         self.health = min(self.health, self.max_health)  # caps health at max
-        print(f'You cast a healing spell and recover {heal_amount} health!')
-        print(f'You now have {player.health} health.')
+        print(Fore.GREEN + f'You cast a healing spell and recover {heal_amount} health!')
+        print(f'You now have {player.health} health.' + Style.RESET_ALL)
 
 
 # treasure coffer spawn function
@@ -76,14 +77,14 @@ def spawn_coffer():
     with open('coffer.txt') as f:
         contents = f.read()
         print(contents)
-    print(f'Do you want to [loot] the coffer, or [ignore] it and continue?')
+    print('Do you want to ' + Fore.YELLOW + '[loot]' + Style.RESET_ALL + ' the coffer, or ' + Fore.RED + '[ignore]' + Style.RESET_ALL + ' it and continue?')
     while True:
         decision = input().lower()
         if decision == 'ignore':
             print('You ignore the coffer and continue on your way.')
             break
         elif decision == 'loot':
-            print(f'The coffer contains {coffer.gold} pieces of gold inside.')
+            print(Fore.YELLOW + f'The coffer contains {coffer.gold} pieces of gold inside.')
             coffer.loot(player)
             global coffers_looted
             coffers_looted += 1
@@ -98,12 +99,12 @@ def spawn_mimic():
     with open('coffer.txt') as f:
         contents = f.read()
         print(contents)
-    print(f'Do you want to [loot] the coffer, or [ignore] it and continue?')
+    print('Do you want to ' + Fore.YELLOW + '[loot]' + Style.RESET_ALL + ' the coffer, or ' + Fore.RED + '[ignore]' + Style.RESET_ALL + ' it and continue?')
     while True:
         decision = input().lower()
         if decision == 'ignore':
-            print('Good choice. That was actually a mimic in disguise!')
-            print('You get away safely!')
+            print(Fore.GREEN + 'Good choice. That was actually a mimic in disguise!')
+            print('You get away safely!' + Style.RESET_ALL)
             break
         elif decision == 'loot':
             print(f'The {enemy.name} reveals itself, shedding its glittering disguise and attacks!')
@@ -115,7 +116,7 @@ def spawn_mimic():
 
             while player.health > 0 and enemy.health > 0:
                 if players_turn:
-                    print(f'Do you [attack] the {enemy.name} or cast a [heal] spell?')
+                    print('Do you ' + Fore.RED + '[attack]' + Style.RESET_ALL + f' the {enemy.name} or cast a ' + Fore.GREEN + '[heal]' + Style.RESET_ALL + ' spell?')
                     decision = input().lower()
                     if decision == 'heal':
                         player.heal()
@@ -131,7 +132,7 @@ def spawn_mimic():
                 players_turn = not players_turn
 
             if player.health <= 0:
-                print(f'You have been defeated by the {enemy.name}.')
+                print(Fore.RED + f'You have been defeated by the {enemy.name}.')
                 game_recap()
             else:
                 print(f'You have successfully defeated the {enemy.name}!')
@@ -155,7 +156,7 @@ def spawn_monster():
 
     while player.health > 0 and enemy.health > 0:
         if players_turn:
-            print(f'Do you [attack] the {enemy.name} or cast a [heal] spell?')
+            print('Do you ' + Fore.RED + '[attack]' + Style.RESET_ALL + f' the {enemy.name} or cast a ' + Fore.GREEN + '[heal]' + Style.RESET_ALL + ' spell?')
             decision = input().lower()
             if decision == 'heal':
                 player.heal()
@@ -171,16 +172,16 @@ def spawn_monster():
         players_turn = not players_turn
 
     if player.health <= 0:
-        print(f'You have been defeated by the {enemy.name}.')
+        print(Fore.RED + f'You have been defeated by the {enemy.name}.')
         game_recap()
     else:
-        print(f'You have successfully defeated the {enemy.name}!')
+        print(Fore.YELLOW + f'You have successfully defeated the {enemy.name}!' + Style.RESET_ALL)
         enemies_defeated += 1
 
 # function to display tally of enemy and coffer encounters
 def game_recap():
-    print(f'You encountered {enemies_encountered} enemies and {coffers_encountered} coffers.')
-    print(f'You defeated {enemies_defeated} enemies and looted {coffers_looted} coffers.')
+    print(Fore.CYAN + f'You encountered {enemies_encountered} enemies and {coffers_encountered} coffers.')
+    print(f'You defeated {enemies_defeated} enemies and looted {coffers_looted} coffers.' + Style.RESET_ALL)
     sys.exit()
 
 # declaring global variables
@@ -191,13 +192,12 @@ coffers_encountered = 0
 coffers_looted = 0
 
 
-
 # main game code
 print('You arrive at the entrance of the caverns.')
 print('Armed with your trusty sword and handful of spells, you venture into the dark depths before you.')
 art.aprint('sword6')
 while True:
-    decision = input('Continue to the next area? (y/n): ').lower()
+    decision = input('Continue to the next area? [y/n]: ').lower()
     if decision == 'n':
         print('Until next time!')
         # print(f'You encountered {enemies_encountered} enemies and {coffers_encountered} coffers.')
@@ -207,22 +207,26 @@ while True:
     elif decision == 'y':
         encounter = random.randint(1,10)
         if encounter >= 9:
-            print('You discover a glittering treasure coffer!')
+            print(Fore.YELLOW + 'You discover a glittering treasure coffer!')
+            print(Style.RESET_ALL)
             coffers_encountered += 1
             spawn_coffer()
         elif encounter >= 3:
-            print('You run into a monster!')
+            print(Fore.RED + 'You run into a monster!')
+            print(Style.RESET_ALL)
             enemies_encountered += 1
             spawn_monster()
             coffer_drop = random.randint(1, 10)
             if coffer_drop >= 9:
-                print('Huzzah! Upon its defeat, the monster drops a bonus treasure coffer!')
+                print(Fore.YELLOW + 'Huzzah! Upon its defeat, the monster drops a bonus treasure coffer!')
+                print(Style.RESET_ALL)
                 coffers_encountered += 1
                 spawn_coffer ()
             else:
                 pass
         else:
-            print('You discover a suspicious looking treasure coffer.')
+            print(Fore.YELLOW + 'You discover a suspicious looking treasure coffer.')
+            print(Style.RESET_ALL)
             enemies_encountered += 1
             spawn_mimic()
     else:
