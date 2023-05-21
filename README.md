@@ -64,11 +64,11 @@ These should be automatically installed when running of the provided bash script
 
 Because there are no images or sound produced when running the game, any modern PC from the past 10 years should suffice. The application does not have any high CPU, GPU or memory requirements.
 
-To run the game, users will simply need an operating system that supports the use of a Terminal or Command Line Interface, such as Linux. If you are using a Windows computer, it is recommened that you use the Ubuntu terminal environment by installing the Windows Subsystem for Linux (WSL).
+To run the game, users will simply need an operating system that supports the use of a Terminal or Command Line Interface, such as Linux. If you are using a Windows computer, it is recommended that you use the Ubuntu terminal environment by installing the Windows Subsystem for Linux (WSL).
 
 ### How to play the game
 
-Once you have run one of the provided bash scripts and the required packages have been installed, the game will run. The text will provide you with instructions with options highlighted in colour to guide you on how to proceed through the dungeon. The game takes simple text input from the player and randomises their encounters.
+Once you have run the provided Game.sh bash script and the required packages have been installed, the game will run. The text will provide you with instructions with options highlighted in colour to guide you on how to proceed through the dungeon. The game takes simple text input from the player and randomises their encounters.
 
 The game will end when the player is defeated in battle against a monster, or if they choose to stop before the next encounter. Try your best to develop a strategy during the monster battles (there's no running from the fights!), collect as much treasure as possible, and spot the traps!
 
