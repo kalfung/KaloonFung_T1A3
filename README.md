@@ -2,7 +2,7 @@
 
 ## Video Presentation of Terminal Application
 
-[Video Presentation link to be added](link to be added)
+[Video Presentation link](https://youtu.be/0Op9-XwxEKg)
 
 ## (R3) Attributions
 
